@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Portfolio | 遊戲作品集</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #58a6ff;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        p.subtitle {
+            color: #8b949e;
+            font-size: 1rem;
+        }
+        p.notice {
+            color: #e3b341;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #1f6feb;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+        .card-header {
+            margin-bottom: 1rem;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            color: #f0f6fc;
+            margin-bottom: 0.5rem;
+        }
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .badge-itch {
+            background-color: rgba(255, 36, 82, 0.15);
+            color: #ff4766;
+            border: 1px solid rgba(255, 36, 82, 0.4);
+        }
+        .badge-github {
+            background-color: rgba(56, 139, 253, 0.15);
+            color: #58a6ff;
+            border: 1px solid rgba(56, 139, 253, 0.4);
+        }
+        .btn {
+            display: inline-block;
+            text-align: center;
+            background-color: #238636;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            background-color: #2ea043;
+        }
+        footer {
+            margin-top: auto;
+            padding-top: 3rem;
+            color: #484f58;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Game Portfolio</h1>
+        <p class="subtitle">點擊下方卡片即可直接試玩遊戲</p>
+        <p class="notice">⚠️ 注意：目前遊戲尚未支援存檔功能，關閉頁面後進度將重置</p>
+    </header>
+
+    <main class="container">
+        <!-- Game 1 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-itch">itch.io</span>
+                <h2 class="card-title">Neon Survivor</h2>
+            </div>
+            <a href="https://leebron.itch.io/neon-survivor" target="_blank" class="btn">立即遊玩</a>
+        </div>
+
+        <!-- Game 2 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-itch">itch.io</span>
+                <h2 class="card-title">Neon Frontline</h2>
+            </div>
+            <a href="https://leebron.itch.io/neon-frontline" target="_blank" class="btn">立即遊玩</a>
+        </div>
+
+        <!-- Game 3 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-github">GitHub Pages</span>
+                <h2 class="card-title">Neon Gravity Slingshot</h2>
+            </div>
+            <a href="https://s11331136.github.io/Neon-Gravity-Slingshot/" target="_blank" class="btn">立即遊玩</a>
+        </div>
+
+        <!-- Game 4 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-github">GitHub Pages</span>
+                <h2 class="card-title">Cyber Card Spire</h2>
+            </div>
+            <a href="https://s11331136.github.io/Cyber-Card-Spire/" target="_blank" class="btn">立即遊玩</a>
+        </div>
+
+        <!-- Game 5 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="badge badge-github">GitHub Pages</span>
+                <h2 class="card-title">Incremental Game</h2>
+            </div>
+            <a href="https://s11331136.github.io/Incremental-Game/" target="_blank" class="btn">立即遊玩</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Web Game Portfolio</p>
+    </footer>
+
+</body>
+</html>
