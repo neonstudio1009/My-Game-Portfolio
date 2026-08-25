@@ -19,7 +19,93 @@
             align-items: center;
             min-height: 100vh;
             padding: 3rem 1.5rem;
+            overflow-x: hidden;
         }
+
+        /* ---------------- 開場動畫 (Intro Overlay) ---------------- */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #080c14;
+            /* 模擬 CRT 螢幕掃描線與科幻網格光暈 */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(31, 111, 235, 0.25) 0%, transparent 70%),
+                linear-gradient(rgba(18, 26, 41, 0) 50%, rgba(0, 0, 0, 0.5) 50%);
+            background-size: 100% 100%, 100% 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            cursor: pointer;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s ease, visibility 0.8s;
+            text-align: center;
+            padding: 2rem;
+            user-select: none;
+        }
+
+        /* 點擊後淡出消失 */
+        #intro-screen.hidden {
+            opacity: 0;
+            transform: scale(1.08);
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        .intro-title {
+            font-size: 2.8rem;
+            color: #58a6ff;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            animation: textGlow 2s infinite alternate;
+        }
+
+        .intro-subtitle {
+            font-size: 1.1rem;
+            color: #8b949e;
+            max-width: 500px;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .intro-prompt {
+            font-size: 1.1rem;
+            color: #00f2fe;
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            background-color: rgba(0, 242, 254, 0.05);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            letter-spacing: 2px;
+            animation: pulseBlink 1.5s infinite ease-in-out;
+        }
+
+        /* 開場動畫關鍵影格 */
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 10px rgba(88, 166, 255, 0.4);
+            }
+            to {
+                text-shadow: 0 0 25px rgba(88, 166, 255, 0.9), 0 0 40px rgba(31, 111, 235, 0.6);
+            }
+        }
+
+        @keyframes pulseBlink {
+            0%, 100% {
+                opacity: 0.4;
+                transform: scale(0.98);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.03);
+                box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            }
+        }
+
+        /* ---------------- 主頁面樣式 ---------------- */
         header {
             text-align: center;
             margin-bottom: 3rem;
@@ -110,14 +196,12 @@
         .btn:hover {
             background-color: #2ea043;
         }
-        /* APK 下載按鈕 (藍色) */
         .btn-apk {
             background-color: #1f6feb;
         }
         .btn-apk:hover {
             background-color: #388bfd;
         }
-        /* 建議電腦遊玩/無APK提示區塊 (灰色) */
         .btn-disabled {
             background-color: #21262d;
             color: #8b949e;
@@ -138,10 +222,17 @@
 </head>
 <body>
 
+    <!-- 科技感開場蓋版 (Intro Overlay) -->
+    <div id="intro-screen">
+        <h1 class="intro-title">System Initialized</h1>
+        <p class="intro-subtitle">Welcome to Neon System<br>體驗個人原創網頁遊戲與 Android 簡易安裝版本</p>
+        <div class="intro-prompt"> CLICK TO ENTER </div>
+    </div>
+
     <header>
         <h1>My Game Portfolio</h1>
         <p class="subtitle">點擊下方卡片即可直接試玩遊戲或下載 APK 安裝檔</p>
-        <p class="notice">⚠️ 注意：目前遊戲尚未支援存檔功能，關閉頁面後進度將重置；APK 下載僅支援 Android 裝置</p>
+        <p class="notice">⚠️ 注意：目前遊戲尚未支援存檔功能，關閉頁面後進度將重置；APK 下載目前僅支援 Android 裝置</p>
     </header>
 
     <main class="container">
@@ -209,6 +300,14 @@
     <footer>
         <p>© 2026 Web Game Portfolio</p>
     </footer>
+
+    <!-- 點擊進入網站的腳本 -->
+    <script>
+        const introScreen = document.getElementById('intro-screen');
+        introScreen.addEventListener('click', () => {
+            introScreen.classList.add('hidden');
+        });
+    </script>
 
 </body>
 </html>
