@@ -87,8 +87,16 @@
             color: #58a6ff;
             border: 1px solid rgba(56, 139, 253, 0.4);
         }
+
+        /* 按鈕容器與樣式 */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
         .btn {
-            display: inline-block;
+            display: block;
             text-align: center;
             background-color: #238636;
             color: #ffffff;
@@ -98,11 +106,28 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: background-color 0.2s ease;
-            margin-top: 1rem;
         }
         .btn:hover {
             background-color: #2ea043;
         }
+        /* APK 下載按鈕 (藍色) */
+        .btn-apk {
+            background-color: #1f6feb;
+        }
+        .btn-apk:hover {
+            background-color: #388bfd;
+        }
+        /* 建議電腦遊玩/無APK提示區塊 (灰色) */
+        .btn-disabled {
+            background-color: #21262d;
+            color: #8b949e;
+            border: 1px solid #30363d;
+            cursor: default;
+        }
+        .btn-disabled:hover {
+            background-color: #21262d;
+        }
+
         footer {
             margin-top: auto;
             padding-top: 3rem;
@@ -115,8 +140,8 @@
 
     <header>
         <h1>My Game Portfolio</h1>
-        <p class="subtitle">點擊下方卡片即可直接試玩遊戲</p>
-        <p class="notice">⚠️ 注意：目前遊戲尚未支援存檔功能，關閉頁面後進度將重置</p>
+        <p class="subtitle">點擊下方卡片即可直接試玩遊戲或下載 APK 安裝檔</p>
+        <p class="notice">⚠️ 注意：目前遊戲尚未支援存檔功能，關閉頁面後進度將重置；APK 下載僅支援 Android 裝置</p>
     </header>
 
     <main class="container">
@@ -126,7 +151,10 @@
                 <span class="badge badge-itch">itch.io</span>
                 <h2 class="card-title">Neon Survivor</h2>
             </div>
-            <a href="https://leebron.itch.io/neon-survivor" target="_blank" class="btn">立即遊玩</a>
+            <div class="btn-group">
+                <a href="https://leebron.itch.io/neon-survivor" target="_blank" class="btn">立即遊玩</a>
+                <span class="btn btn-disabled">建議電腦遊玩</span>
+            </div>
         </div>
 
         <!-- Game 2 -->
@@ -135,7 +163,10 @@
                 <span class="badge badge-itch">itch.io</span>
                 <h2 class="card-title">Neon Frontline</h2>
             </div>
-            <a href="https://leebron.itch.io/neon-frontline" target="_blank" class="btn">立即遊玩</a>
+            <div class="btn-group">
+                <a href="https://leebron.itch.io/neon-frontline" target="_blank" class="btn">立即遊玩</a>
+                <a href="apks/Neon%20Frontline.apk" download class="btn btn-apk">下載 APK 檔案</a>
+            </div>
         </div>
 
         <!-- Game 3 -->
@@ -144,7 +175,10 @@
                 <span class="badge badge-github">GitHub Pages</span>
                 <h2 class="card-title">Neon Gravity Slingshot</h2>
             </div>
-            <a href="https://s11331136.github.io/Neon-Gravity-Slingshot/" target="_blank" class="btn">立即遊玩</a>
+            <div class="btn-group">
+                <a href="https://s11331136.github.io/Neon-Gravity-Slingshot/" target="_blank" class="btn">立即遊玩</a>
+                <a href="apks/Neon%20Gravity%20Slingshot.apk" download class="btn btn-apk">下載 APK 檔案</a>
+            </div>
         </div>
 
         <!-- Game 4 -->
@@ -153,7 +187,10 @@
                 <span class="badge badge-github">GitHub Pages</span>
                 <h2 class="card-title">Cyber Card Spire</h2>
             </div>
-            <a href="https://s11331136.github.io/Cyber-Card-Spire/" target="_blank" class="btn">立即遊玩</a>
+            <div class="btn-group">
+                <a href="https://s11331136.github.io/Cyber-Card-Spire/" target="_blank" class="btn">立即遊玩</a>
+                <a href="apks/Cyber%20Card%20Spire.apk" download class="btn btn-apk">下載 APK 檔案</a>
+            </div>
         </div>
 
         <!-- Game 5 -->
@@ -162,7 +199,10 @@
                 <span class="badge badge-github">GitHub Pages</span>
                 <h2 class="card-title">Incremental Game</h2>
             </div>
-            <a href="https://s11331136.github.io/Incremental-Game/" target="_blank" class="btn">立即遊玩</a>
+            <div class="btn-group">
+                <a href="https://s11331136.github.io/Incremental-Game/" target="_blank" class="btn">立即遊玩</a>
+                <a href="apks/Incremental%20Game.apk" download class="btn btn-apk">下載 APK 檔案</a>
+            </div>
         </div>
     </main>
 
