@@ -58,7 +58,6 @@
             overflow: hidden;
         }
 
-        /* 雷射掃描線 */
         .laser-beam {
             position: absolute;
             top: 0;
@@ -70,7 +69,6 @@
             animation: scanAnimation 3.5s infinite linear;
         }
 
-        /* HUD 科技邊框容器 */
         .hud-frame {
             position: relative;
             padding: 2.5rem 3.5rem;
@@ -81,7 +79,6 @@
             max-width: 650px;
         }
 
-        /* 邊緣科技角標 */
         .hud-corner {
             position: absolute;
             width: 12px;
@@ -94,12 +91,10 @@
         .bl { bottom: -2px; left: -2px; border-width: 0 0 2px 2px; }
         .br { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; }
 
-        /* 點擊觸發的螢幕震撼與故障閃爍效果 */
         #intro-screen.glitching {
             animation: screenGlitch 0.4s ease forwards;
         }
 
-        /* 點擊後的長動畫淡出離場 */
         #intro-screen.hidden {
             opacity: 0;
             transform: scale(1.25) rotate(0.5deg);
@@ -189,7 +184,7 @@
             background: rgba(22, 27, 34, 0.85);
             border: 1px solid #30363d;
             clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-            padding: 1.8rem;
+            padding: 1.6rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -208,6 +203,7 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.15), transparent);
             transition: left 0.6s ease;
+            pointer-events: none;
         }
 
         .card:hover::before {
@@ -221,12 +217,12 @@
         }
 
         .card-header {
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.8rem;
         }
         .card-title {
             font-size: 1.3rem;
             color: #f0f6fc;
-            margin-top: 0.6rem;
+            margin-top: 0.5rem;
             letter-spacing: 0.5px;
         }
 
@@ -250,11 +246,48 @@
             border: 1px solid rgba(0, 242, 254, 0.5);
         }
 
+        /* 遊戲特色標籤組 */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+            margin-bottom: 0.8rem;
+        }
+        .feature-tag {
+            font-size: 0.75rem;
+            color: #58a6ff;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.25);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 技術棧標籤組 */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.2rem;
+            padding-top: 0.6rem;
+            border-top: 1px dashed rgba(48, 54, 61, 0.8);
+        }
+        .tech-badge {
+            font-size: 0.7rem;
+            font-family: monospace;
+            color: #8b949e;
+            background: #161b22;
+            border: 1px solid #30363d;
+            padding: 0.15rem 0.45rem;
+            border-radius: 3px;
+        }
+
         .btn-group {
             display: flex;
             flex-direction: column;
             gap: 0.6rem;
-            margin-top: 1rem;
+            margin-top: auto;
         }
         .btn {
             display: block;
@@ -287,7 +320,6 @@
             cursor: default;
         }
 
-        /* 關鍵影格 Keyframes */
         @keyframes scanAnimation {
             0% { top: -5%; }
             100% { top: 105%; }
@@ -322,7 +354,6 @@
 </head>
 <body>
 
-    <!-- 科技感開場蓋版 (Intro Overlay) -->
     <div id="intro-screen">
         <div class="laser-beam"></div>
         <div class="hud-frame">
@@ -340,16 +371,27 @@
 
     <header>
         <h1>My Game Portfolio</h1>
-        <p class="subtitle">點擊下方卡片即可直接遊玩或下載 APK 安裝檔</p>
+        <p class="subtitle">點擊下方卡片即可直接試玩遊戲或下載 APK 安裝檔</p>
         <p class="notice">⚠️ 注意：目前遊戲尚未支援存檔功能，關閉頁面後進度將重置；APK 下載僅支援 Android 裝置</p>
     </header>
 
     <main class="container">
         <!-- Game 1 -->
         <div class="card">
-            <div class="card-header">
-                <span class="badge badge-itch">itch.io</span>
-                <h2 class="card-title">Neon Survivor</h2>
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-itch">itch.io</span>
+                    <h2 class="card-title">Neon Survivor</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#肉鴿割草</span>
+                    <span class="feature-tag">#彈幕避開</span>
+                    <span class="feature-tag">#無盡生存</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">HTML5 Canvas</span>
+                    <span class="tech-badge">Vanilla JS</span>
+                </div>
             </div>
             <div class="btn-group">
                 <a href="https://leebron.itch.io/neon-survivor" target="_blank" class="btn">立即遊玩</a>
@@ -359,9 +401,20 @@
 
         <!-- Game 2 -->
         <div class="card">
-            <div class="card-header">
-                <span class="badge badge-itch">itch.io</span>
-                <h2 class="card-title">Neon Frontline</h2>
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-itch">itch.io</span>
+                    <h2 class="card-title">Neon Frontline</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#直螢幕</span>
+                    <span class="feature-tag">#縱向彈幕</span>
+                    <span class="feature-tag">#戰機強化</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">HTML5 Canvas</span>
+                    <span class="tech-badge">Touch Events</span>
+                </div>
             </div>
             <div class="btn-group">
                 <a href="https://leebron.itch.io/neon-frontline" target="_blank" class="btn">立即遊玩</a>
@@ -371,9 +424,20 @@
 
         <!-- Game 3 -->
         <div class="card">
-            <div class="card-header">
-                <span class="badge badge-github">GitHub Pages</span>
-                <h2 class="card-title">Neon Gravity Slingshot</h2>
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-github">GitHub Pages</span>
+                    <h2 class="card-title">Neon Gravity Slingshot</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#太空物理</span>
+                    <span class="feature-tag">#引力彈射</span>
+                    <span class="feature-tag">#益智解謎</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">Vector Math</span>
+                    <span class="tech-badge">Canvas 2D</span>
+                </div>
             </div>
             <div class="btn-group">
                 <a href="https://s11331136.github.io/Neon-Gravity-Slingshot/" target="_blank" class="btn">立即遊玩</a>
@@ -383,9 +447,20 @@
 
         <!-- Game 4 -->
         <div class="card">
-            <div class="card-header">
-                <span class="badge badge-github">GitHub Pages</span>
-                <h2 class="card-title">Cyber Card Spire</h2>
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-github">GitHub Pages</span>
+                    <h2 class="card-title">Cyber Card Spire</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#卡牌構建</span>
+                    <span class="feature-tag">#回合策略</span>
+                    <span class="feature-tag">#爬塔挑戰</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">DOM Manipulation</span>
+                    <span class="tech-badge">ES6 Class</span>
+                </div>
             </div>
             <div class="btn-group">
                 <a href="https://s11331136.github.io/Cyber-Card-Spire/" target="_blank" class="btn">立即遊玩</a>
@@ -395,9 +470,20 @@
 
         <!-- Game 5 -->
         <div class="card">
-            <div class="card-header">
-                <span class="badge badge-github">GitHub Pages</span>
-                <h2 class="card-title">Incremental Game</h2>
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-github">GitHub Pages</span>
+                    <h2 class="card-title">Incremental Game</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#星際採礦</span>
+                    <span class="feature-tag">#數值膨脹</span>
+                    <span class="feature-tag">#放置掛機</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">LocalStorage</span>
+                    <span class="tech-badge">BigNumber Algo</span>
+                </div>
             </div>
             <div class="btn-group">
                 <a href="https://s11331136.github.io/Incremental-Game/" target="_blank" class="btn">立即遊玩</a>
@@ -407,9 +493,20 @@
 
         <!-- Game 6 -->
         <div class="card">
-            <div class="card-header">
-                <span class="badge badge-github">GitHub Pages</span>
-                <h2 class="card-title">3D FPS</h2>
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-github">GitHub Pages</span>
+                    <h2 class="card-title">3D FPS</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#第一人稱</span>
+                    <span class="feature-tag">#3D射擊</span>
+                    <span class="feature-tag">#即時對戰</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">Three.js</span>
+                    <span class="tech-badge">PointerLock API</span>
+                </div>
             </div>
             <div class="btn-group">
                 <a href="https://s11331136.github.io/3D-FPS/" target="_blank" class="btn">立即遊玩</a>
@@ -419,9 +516,20 @@
 
         <!-- Game 7 -->
         <div class="card">
-            <div class="card-header">
-                <span class="badge badge-github">GitHub Pages</span>
-                <h2 class="card-title">Flight Simulator</h2>
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-github">GitHub Pages</span>
+                    <h2 class="card-title">Flight Simulator</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#3D飛行</span>
+                    <span class="feature-tag">#擬真駕駛</span>
+                    <span class="feature-tag">#自由探索</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">Three.js</span>
+                    <span class="tech-badge">WebGL Engine</span>
+                </div>
             </div>
             <div class="btn-group">
                 <a href="https://s11331136.github.io/Flight-Simulator-Pro-Max/" target="_blank" class="btn">立即遊玩</a>
@@ -434,7 +542,6 @@
         <p>© 2026 Web Game Portfolio | Neon System</p>
     </footer>
 
-    <!-- 多階段點擊躍遷動畫腳本 -->
     <script>
         const introScreen = document.getElementById('intro-screen');
         let clicked = false;
@@ -442,11 +549,7 @@
         introScreen.addEventListener('click', () => {
             if (clicked) return;
             clicked = true;
-
-            // 第一階段：0.4 秒螢幕震動與賽博閃爍
             introScreen.classList.add('glitching');
-
-            // 第二階段：觸發 2.5 秒空間縮放與淡出離場
             setTimeout(() => {
                 introScreen.classList.add('hidden');
             }, 300);
