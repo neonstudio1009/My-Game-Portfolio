@@ -179,7 +179,7 @@
             gap: 1.8rem;
         }
 
-        /* HUD 斜切角卡片 */
+        /* HUD 斜切角卡片預設隱藏 */
         .card {
             background: rgba(22, 27, 34, 0.85);
             border: 1px solid #30363d;
@@ -191,6 +191,8 @@
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(5px);
+            opacity: 0;
+            transform: translateY(50px);
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -211,10 +213,41 @@
         }
 
         .card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-6px) !important;
             border-color: #00f2fe;
             box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
         }
+
+        /* 卡片逐個從下方滑入動畫 */
+        @keyframes cardAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+                filter: brightness(1.8) drop-shadow(0 0 10px #00f2fe);
+            }
+            70% {
+                filter: brightness(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: brightness(1);
+            }
+        }
+
+        .container.active .card {
+            animation: cardAppear 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* 依序交錯延遲時間 (支援 8 張卡片) */
+        .container.active .card:nth-child(1) { animation-delay: 0.08s; }
+        .container.active .card:nth-child(2) { animation-delay: 0.16s; }
+        .container.active .card:nth-child(3) { animation-delay: 0.24s; }
+        .container.active .card:nth-child(4) { animation-delay: 0.32s; }
+        .container.active .card:nth-child(5) { animation-delay: 0.40s; }
+        .container.active .card:nth-child(6) { animation-delay: 0.48s; }
+        .container.active .card:nth-child(7) { animation-delay: 0.56s; }
+        .container.active .card:nth-child(8) { animation-delay: 0.64s; }
 
         .card-header {
             margin-bottom: 0.8rem;
@@ -295,12 +328,14 @@
             background-color: #238636;
             color: #ffffff;
             text-decoration: none;
-            padding: 0.7rem 1rem;
+            padding: 0.65rem 1rem;
             border-radius: 4px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             letter-spacing: 1px;
             transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
         }
         .btn:hover {
             background-color: #2ea043;
@@ -313,11 +348,112 @@
             background-color: #388bfd;
             box-shadow: 0 0 12px rgba(56, 139, 253, 0.6);
         }
+        .btn-detail {
+            background-color: rgba(0, 242, 254, 0.12);
+            color: #00f2fe;
+            border: 1px solid rgba(0, 242, 254, 0.4);
+        }
+        .btn-detail:hover {
+            background-color: rgba(0, 242, 254, 0.25);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+        }
         .btn-disabled {
             background-color: #161b22;
             color: #6e7681;
             border: 1px solid #30363d;
             cursor: default;
+        }
+
+        /* ---------------- 高階彈窗 Modal 樣式與動畫 ---------------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            backdrop-filter: blur(0px);
+            background: rgba(0, 0, 0, 0);
+            transition: opacity 0.3s ease, backdrop-filter 0.3s ease, background 0.3s ease, visibility 0.3s;
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            position: relative;
+            background: rgba(13, 17, 23, 0.95);
+            border: 1px solid #00f2fe;
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.35);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 520px;
+            padding: 2.2rem;
+            opacity: 0;
+            transform: scale(0.75) translateY(40px) rotateX(-8deg);
+            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            will-change: transform, opacity;
+        }
+
+        .modal-overlay.active .modal-content {
+            opacity: 1;
+            transform: scale(1) translateY(0) rotateX(0deg);
+        }
+
+        /* 彈窗內元素：動態階梯式依次浮現 (Staggered Reveal) */
+        .modal-content > * {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content > *:nth-child(1) { transition-delay: 0.10s; opacity: 1; transform: translateY(0); }
+        .modal-overlay.active .modal-content > *:nth-child(2) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
+        .modal-overlay.active .modal-content > *:nth-child(3) { transition-delay: 0.20s; opacity: 1; transform: translateY(0); }
+        .modal-overlay.active .modal-content > *:nth-child(4) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
+        .modal-overlay.active .modal-content > *:nth-child(5) { transition-delay: 0.30s; opacity: 1; transform: translateY(0); }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: transparent;
+            border: none;
+            color: #8b949e;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #ff4766;
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            color: #f0f6fc;
+            margin-top: 0.4rem;
+        }
+
+        .modal-description {
+            color: #c9d1d9;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 1.2rem 0;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-left: 3px solid #00f2fe;
+            border-radius: 0 4px 4px 0;
         }
 
         @keyframes scanAnimation {
@@ -354,6 +490,7 @@
 </head>
 <body>
 
+    <!-- 1. 開場動畫 overlay -->
     <div id="intro-screen">
         <div class="laser-beam"></div>
         <div class="hud-frame">
@@ -363,18 +500,20 @@
             <div class="hud-corner br"></div>
             
             <h1 class="intro-title">SYSTEM INITIALIZED</h1>
-            <p class="intro-subtitle">Welcome to Neon System<br>體驗個人原創網頁遊戲與 Android 簡易安裝版本</p>
+            <p class="intro-subtitle">Welcome to Neon System<br>體驗個人原創網頁遊戲、工具與 Android 安裝包</p>
             <div class="intro-status">[ KERNEL_STATUS: READY ] | [ SECURE_CONNECTION ]</div>
             <div class="intro-prompt">[ CLICK TO ACCESS ]</div>
         </div>
     </div>
 
+    <!-- 2. 主標題區 -->
     <header>
-        <h1>My Game Portfolio</h1>
-        <p class="subtitle">點擊下方卡片即可直接試玩遊戲或下載 APK 安裝檔</p>
-        <p class="notice">⚠️ 注意：目前遊戲尚未支援存檔功能，關閉頁面後進度將重置；APK 下載僅支援 Android 裝置</p>
+        <h1>My Portfolio & Projects</h1>
+        <p class="subtitle">點擊卡片開啟詳細介紹，或直接前往遊玩與下載 APK</p>
+        <p class="notice">⚠️ 注意：部分網頁尚未支援雲端存檔；APK 下載僅支援 Android 裝置</p>
     </header>
 
+    <!-- 3. 卡片展示區 -->
     <main class="container">
         <!-- Game 1 -->
         <div class="card">
@@ -394,8 +533,8 @@
                 </div>
             </div>
             <div class="btn-group">
+                <button class="btn btn-detail" onclick="openModal(0)">詳細資訊</button>
                 <a href="https://leebron.itch.io/neon-survivor" target="_blank" class="btn">立即遊玩</a>
-                <span class="btn btn-disabled">建議電腦遊玩</span>
             </div>
         </div>
 
@@ -417,12 +556,37 @@
                 </div>
             </div>
             <div class="btn-group">
+                <button class="btn btn-detail" onclick="openModal(1)">詳細資訊</button>
                 <a href="https://leebron.itch.io/neon-frontline" target="_blank" class="btn">立即遊玩</a>
                 <a href="apks/Neon%20Frontline.apk" download class="btn btn-apk">下載 APK 檔案</a>
             </div>
         </div>
 
         <!-- Game 3 -->
+        <div class="card">
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-itch">itch.io</span>
+                    <h2 class="card-title">Bright Arena 3D</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#第一人稱</span>
+                    <span class="feature-tag">#3D射擊</span>
+                    <span class="feature-tag">#即時對戰</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">Three.js</span>
+                    <span class="tech-badge">PointerLock API</span>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-detail" onclick="openModal(2)">詳細資訊</button>
+                <a href="https://s11331136.github.io/3D-FPS/" target="_blank" class="btn">立即遊玩</a>
+                <a href="apks/3D%20FPS.apk" download class="btn btn-apk">下載 APK 檔案</a>
+            </div>
+        </div>
+
+        <!-- Game 4 -->
         <div class="card">
             <div>
                 <div class="card-header">
@@ -440,12 +604,13 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a href="https://neonstudio1009.github.io/Neon-Gravity-Slingshot/" target="_blank" class="btn">立即遊玩</a>
+                <button class="btn btn-detail" onclick="openModal(3)">詳細資訊</button>
+                <a href="https://s11331136.github.io/Neon-Gravity-Slingshot/" target="_blank" class="btn">立即遊玩</a>
                 <a href="apks/Neon%20Gravity%20Slingshot.apk" download class="btn btn-apk">下載 APK 檔案</a>
             </div>
         </div>
 
-        <!-- Game 4 -->
+        <!-- Game 5 -->
         <div class="card">
             <div>
                 <div class="card-header">
@@ -463,12 +628,13 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a href="https://neonstudio1009.github.io/Cyber-Card-Spire/" target="_blank" class="btn">立即遊玩</a>
+                <button class="btn btn-detail" onclick="openModal(4)">詳細資訊</button>
+                <a href="https://s11331136.github.io/Cyber-Card-Spire/" target="_blank" class="btn">立即遊玩</a>
                 <a href="apks/Cyber%20Card%20Spire.apk" download class="btn btn-apk">下載 APK 檔案</a>
             </div>
         </div>
 
-        <!-- Game 5 -->
+        <!-- Game 6 -->
         <div class="card">
             <div>
                 <div class="card-header">
@@ -486,31 +652,9 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a href="https://neonstudio1009.github.io/Incremental-Game/" target="_blank" class="btn">立即遊玩</a>
+                <button class="btn btn-detail" onclick="openModal(5)">詳細資訊</button>
+                <a href="https://s11331136.github.io/Incremental-Game/" target="_blank" class="btn">立即遊玩</a>
                 <a href="apks/Incremental%20Game.apk" download class="btn btn-apk">下載 APK 檔案</a>
-            </div>
-        </div>
-
-        <!-- Game 6 -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-github">GitHub Pages</span>
-                    <h2 class="card-title">3D FPS</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#第一人稱</span>
-                    <span class="feature-tag">#3D射擊</span>
-                    <span class="feature-tag">#即時對戰</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">Three.js</span>
-                    <span class="tech-badge">PointerLock API</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <a href="https://leebron.itch.io/bright-arena-3d" target="_blank" class="btn">立即遊玩</a>
-                <a href="apks/3D%20FPS.apk" download class="btn btn-apk">下載 APK 檔案</a>
             </div>
         </div>
 
@@ -532,18 +676,137 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a href="https://neonstudio1009.github.io/Flight-Simulator-Pro-Max/" target="_blank" class="btn">立即遊玩</a>
-                <span class="btn btn-disabled">建議電腦遊玩</span>
+                <button class="btn btn-detail" onclick="openModal(6)">詳細資訊</button>
+                <a href="https://s11331136.github.io/Flight-Simulator-Pro-Max/" target="_blank" class="btn">立即遊玩</a>
+            </div>
+        </div>
+
+        <!-- Game 8 (新增：速讀單字系統) -->
+        <div class="card">
+            <div>
+                <div class="card-header">
+                    <span class="badge badge-github">GitHub Pages</span>
+                    <h2 class="card-title">速讀單字系統</h2>
+                </div>
+                <div class="tag-group">
+                    <span class="feature-tag">#學習</span>
+                    <span class="feature-tag">#英文單字</span>
+                    <span class="feature-tag">#7000單字</span>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">LocalStorage</span>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-detail" onclick="openModal(7)">詳細資訊</button>
+                <a href="https://neonstudio1009.github.io/7000/" target="_blank" class="btn">立即開啟</a>
+                <a href="apks/7000.apk" download class="btn btn-apk">下載 APK 檔案</a>
             </div>
         </div>
     </main>
+
+    <!-- 4. 詳情彈窗 Overlay & Content -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <div class="card-header">
+                <span id="modal-badge" class="badge"></span>
+                <h2 id="modal-title" class="modal-title"></h2>
+            </div>
+            <div id="modal-tags" class="tag-group"></div>
+            <p id="modal-desc" class="modal-description"></p>
+            <div class="btn-group" id="modal-actions">
+                <!-- 動態注入按鈕 -->
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>© 2026 Web Game Portfolio | Neon System</p>
     </footer>
 
     <script>
+        // 專案完整資料集
+        const projects = [
+            {
+                title: "Neon Survivor",
+                badgeClass: "badge-itch",
+                badgeText: "itch.io",
+                tags: ["#肉鴿割草", "#彈幕避開", "#無盡生存"],
+                desc: "霓虹風格的 Roguelike 生存割草遊戲，避開密集的敵方彈幕，組合多樣技能達成無盡生存挑戰。",
+                playUrl: "https://leebron.itch.io/neon-survivor",
+                apkUrl: null
+            },
+            {
+                title: "Neon Frontline",
+                badgeClass: "badge-itch",
+                badgeText: "itch.io",
+                tags: ["#直螢幕", "#縱向彈幕", "#戰機強化"],
+                desc: "縱向彈幕射擊遊戲，支援觸控操作與戰機升級系統，適合行動裝置與電腦隨時體驗。",
+                playUrl: "https://leebron.itch.io/neon-frontline",
+                apkUrl: "apks/Neon%20Frontline.apk"
+            },
+            {
+                title: "Bright Arena 3D",
+                badgeClass: "badge-itch",
+                badgeText: "itch.io",
+                tags: ["#第一人稱", "#3D射擊", "#即時對戰"],
+                desc: "基於 Three.js 打造的 3D 第一人稱競技場射擊遊戲，體驗流暢的視角控制與射擊打擊感。",
+                playUrl: "https://s11331136.github.io/3D-FPS/",
+                apkUrl: "apks/3D%20FPS.apk"
+            },
+            {
+                title: "Neon Gravity Slingshot",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#太空物理", "#引力彈射", "#益智解謎"],
+                desc: "利用星體重力場彈射飛船的物理解謎遊戲，精確計算軌跡穿越各種太空障礙。",
+                playUrl: "https://s11331136.github.io/Neon-Gravity-Slingshot/",
+                apkUrl: "apks/Neon%20Gravity%20Slingshot.apk"
+            },
+            {
+                title: "Cyber Card Spire",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#卡牌構建", "#回合策略", "#爬塔挑戰"],
+                desc: "賽博朋克風格的 Deck-building 爬塔策略遊戲，自由組合卡牌戰術挑戰層層關卡。",
+                playUrl: "https://s11331136.github.io/Cyber-Card-Spire/",
+                apkUrl: "apks/Cyber%20Card%20Spire.apk"
+            },
+            {
+                title: "Incremental Game",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#星際採礦", "#數值膨脹", "#放置掛機"],
+                desc: "星際資源採集主題的放置增量遊戲，體驗自動化升級與指數級成長的數值快感。",
+                playUrl: "https://s11331136.github.io/Incremental-Game/",
+                apkUrl: "apks/Incremental%20Game.apk"
+            },
+            {
+                title: "Flight Simulator",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#3D飛行", "#擬真駕駛", "#自由探索"],
+                desc: "網頁端 WebGL 3D 飛行模擬器，提供寫實的操作體驗與廣闊天空自由飛行樂趣。",
+                playUrl: "https://s11331136.github.io/Flight-Simulator-Pro-Max/",
+                apkUrl: null
+            },
+            {
+                title: "速讀單字系統",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#學習", "#英文單字", "#7000單字"],
+                desc: "針對高中與檢定考試設計的高效單字記憶工具，協助快速刷題與強化英文單字印象。",
+                playUrl: "https://neonstudio1009.github.io/7000/",
+                apkUrl: "apks/7000.apk"
+            }
+        ];
+
+        // 開場動畫點擊邏輯
         const introScreen = document.getElementById('intro-screen');
+        const container = document.querySelector('.container');
         let clicked = false;
 
         introScreen.addEventListener('click', () => {
@@ -552,7 +815,65 @@
             introScreen.classList.add('glitching');
             setTimeout(() => {
                 introScreen.classList.add('hidden');
+                container.classList.add('active');
             }, 300);
+        });
+
+        // 彈窗控制邏輯
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalBadge = document.getElementById('modal-badge');
+        const modalTitle = document.getElementById('modal-title');
+        const modalTags = document.getElementById('modal-tags');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalActions = document.getElementById('modal-actions');
+
+        function openModal(index) {
+            const data = projects[index];
+            if (!data) return;
+
+            // 設置 Modal 內容
+            modalBadge.className = `badge ${data.badgeClass}`;
+            modalBadge.textContent = data.badgeText;
+            modalTitle.textContent = data.title;
+            modalDesc.textContent = data.desc;
+
+            // 渲染標籤
+            modalTags.innerHTML = data.tags
+                .map(tag => `<span class="feature-tag">${tag}</span>`)
+                .join('');
+
+            // 渲染按鈕
+            let actionsHTML = `<a href="${data.playUrl}" target="_blank" class="btn">立即前往 / 遊玩</a>`;
+            if (data.apkUrl) {
+                actionsHTML += `<a href="${data.apkUrl}" download class="btn btn-apk">下載 APK 檔案</a>`;
+            } else {
+                actionsHTML += `<span class="btn btn-disabled">建議電腦開啟遊玩</span>`;
+            }
+            modalActions.innerHTML = actionsHTML;
+
+            // 顯示 Modal
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        // 點擊背景遮罩關閉 Modal
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // ESC 鍵關閉 Modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
         });
     </script>
 
