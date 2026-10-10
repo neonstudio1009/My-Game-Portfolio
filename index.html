@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Portfolio | 遊戲作品集</title>
+    <title>Neon Studio Portfolio | 作品集首頁</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300f2fe'/><stop offset='100%25' stop-color='%23ff007f'/></linearGradient><filter id='glow'><feGaussianBlur stdDeviation='16' result='blur'/><feComposite in='SourceGraphic' in2='blur' operator='over'/></filter></defs><rect width='512' height='512' rx='100' fill='%23060911'/><rect x='20' y='20' width='472' height='472' rx='80' fill='none' stroke='%2300f2fe' stroke-width='10' stroke-opacity='0.4'/><g filter='url(%23glow)'><path d='M 150 360 V 152 L 360 360 V 152' fill='none' stroke='url(%23g)' stroke-width='52' stroke-linecap='round' stroke-linejoin='round'/></g></svg>">
     <style>
         * {
@@ -146,7 +146,7 @@
         /* ---------------- 內部科技介面 ---------------- */
         header {
             text-align: center;
-            margin-bottom: 3.5rem;
+            margin-bottom: 2.5rem;
         }
         h1 {
             font-size: 2.8rem;
@@ -171,15 +171,47 @@
             display: inline-block;
         }
 
+        /* 分類標籤頁籤樣式 */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: rgba(22, 27, 34, 0.8);
+            color: #8b949e;
+            border: 1px solid #30363d;
+            padding: 0.65rem 1.4rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 1px;
+        }
+        .tab-btn:hover {
+            color: #f0f6fc;
+            border-color: #58a6ff;
+            background: rgba(88, 166, 255, 0.1);
+        }
+        .tab-btn.active {
+            color: #00f2fe;
+            border-color: #00f2fe;
+            background: rgba(0, 242, 254, 0.15);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
         .container {
             width: 100%;
-            max-width: 950px;
+            max-width: 1100px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.8rem;
         }
 
-        /* HUD 斜切角卡片預設隱藏 */
+        /* HUD 斜切角卡片 */
         .card {
             background: rgba(22, 27, 34, 0.85);
             border: 1px solid #30363d;
@@ -192,7 +224,7 @@
             overflow: hidden;
             backdrop-filter: blur(5px);
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(30px);
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -218,15 +250,12 @@
             box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
         }
 
-        /* 卡片逐個從下方滑入動畫 */
+        /* 卡片滑入動畫 */
         @keyframes cardAppear {
             0% {
                 opacity: 0;
-                transform: translateY(50px) scale(0.95);
-                filter: brightness(1.8) drop-shadow(0 0 10px #00f2fe);
-            }
-            70% {
-                filter: brightness(1.2);
+                transform: translateY(40px) scale(0.95);
+                filter: brightness(1.5);
             }
             100% {
                 opacity: 1;
@@ -236,18 +265,8 @@
         }
 
         .container.active .card {
-            animation: cardAppear 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation: cardAppear 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-
-        /* 依序交錯延遲時間 (支援 8 張卡片) */
-        .container.active .card:nth-child(1) { animation-delay: 0.08s; }
-        .container.active .card:nth-child(2) { animation-delay: 0.16s; }
-        .container.active .card:nth-child(3) { animation-delay: 0.24s; }
-        .container.active .card:nth-child(4) { animation-delay: 0.32s; }
-        .container.active .card:nth-child(5) { animation-delay: 0.40s; }
-        .container.active .card:nth-child(6) { animation-delay: 0.48s; }
-        .container.active .card:nth-child(7) { animation-delay: 0.56s; }
-        .container.active .card:nth-child(8) { animation-delay: 0.64s; }
 
         .card-header {
             margin-bottom: 0.8rem;
@@ -278,8 +297,12 @@
             color: #00f2fe;
             border: 1px solid rgba(0, 242, 254, 0.5);
         }
+        .badge-project {
+            background-color: rgba(163, 113, 247, 0.15);
+            color: #d2a8ff;
+            border: 1px solid rgba(163, 113, 247, 0.5);
+        }
 
-        /* 遊戲特色標籤組 */
         .tag-group {
             display: flex;
             flex-wrap: wrap;
@@ -297,7 +320,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* 技術棧標籤組 */
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
@@ -348,6 +370,13 @@
             background-color: #388bfd;
             box-shadow: 0 0 12px rgba(56, 139, 253, 0.6);
         }
+        .btn-project {
+            background-color: #8957e5;
+        }
+        .btn-project:hover {
+            background-color: #a371f7;
+            box-shadow: 0 0 12px rgba(163, 113, 247, 0.6);
+        }
         .btn-detail {
             background-color: rgba(0, 242, 254, 0.12);
             color: #00f2fe;
@@ -364,7 +393,7 @@
             cursor: default;
         }
 
-        /* ---------------- 高階彈窗 Modal 樣式與動畫 ---------------- */
+        /* ---------------- 高階彈窗 Modal ---------------- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -402,26 +431,12 @@
             opacity: 0;
             transform: scale(0.75) translateY(40px) rotateX(-8deg);
             transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-            will-change: transform, opacity;
         }
 
         .modal-overlay.active .modal-content {
             opacity: 1;
             transform: scale(1) translateY(0) rotateX(0deg);
         }
-
-        /* 彈窗內元素：動態階梯式依次浮現 (Staggered Reveal) */
-        .modal-content > * {
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-content > *:nth-child(1) { transition-delay: 0.10s; opacity: 1; transform: translateY(0); }
-        .modal-overlay.active .modal-content > *:nth-child(2) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
-        .modal-overlay.active .modal-content > *:nth-child(3) { transition-delay: 0.20s; opacity: 1; transform: translateY(0); }
-        .modal-overlay.active .modal-content > *:nth-child(4) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
-        .modal-overlay.active .modal-content > *:nth-child(5) { transition-delay: 0.30s; opacity: 1; transform: translateY(0); }
 
         .modal-close {
             position: absolute;
@@ -500,7 +515,7 @@
             <div class="hud-corner br"></div>
             
             <h1 class="intro-title">SYSTEM INITIALIZED</h1>
-            <p class="intro-subtitle">Welcome to Neon System<br>體驗個人原創網頁遊戲、工具與 Android 安裝包</p>
+            <p class="intro-subtitle">Welcome to Neon System<br>體驗原創網頁遊戲、研究專題平台與應用工具</p>
             <div class="intro-status">[ KERNEL_STATUS: READY ] | [ SECURE_CONNECTION ]</div>
             <div class="intro-prompt">[ CLICK TO ACCESS ]</div>
         </div>
@@ -508,206 +523,25 @@
 
     <!-- 2. 主標題區 -->
     <header>
-        <h1>My Portfolio & Projects</h1>
-        <p class="subtitle">點擊卡片開啟詳細介紹，或直接前往遊玩與下載 APK</p>
+        <h1>Neon Studio Projects</h1>
+        <p class="subtitle">點擊切換分類瀏覽網頁遊戲、研究專題平台與實用工具</p>
         <p class="notice">⚠️ 注意：部分網頁尚未支援雲端存檔；APK 下載僅支援 Android 裝置</p>
     </header>
 
-    <!-- 3. 卡片展示區 -->
-    <main class="container">
-        <!-- Game 1 -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-itch">itch.io</span>
-                    <h2 class="card-title">Neon Survivor</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#肉鴿割草</span>
-                    <span class="feature-tag">#彈幕避開</span>
-                    <span class="feature-tag">#無盡生存</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">HTML5 Canvas</span>
-                    <span class="tech-badge">Vanilla JS</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-detail" onclick="openModal(0)">詳細資訊</button>
-                <a href="https://leebron.itch.io/neon-survivor" target="_blank" class="btn">立即遊玩</a>
-            </div>
-        </div>
+    <!-- 3. 分類頁籤篩選列 -->
+    <nav class="category-nav">
+        <button class="tab-btn active" onclick="switchCategory('all', this)">全部作品 (<span id="count-all">0</span>)</button>
+        <button class="tab-btn" onclick="switchCategory('game', this)">🎮 網頁遊戲 (<span id="count-game">0</span>)</button>
+        <button class="tab-btn" onclick="switchCategory('project', this)">🛰️ 專題與平台 (<span id="count-project">0</span>)</button>
+        <button class="tab-btn" onclick="switchCategory('tool', this)">📚 應用與工具 (<span id="count-tool">0</span>)</button>
+    </nav>
 
-        <!-- Game 2 -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-itch">itch.io</span>
-                    <h2 class="card-title">Neon Frontline</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#直螢幕</span>
-                    <span class="feature-tag">#縱向彈幕</span>
-                    <span class="feature-tag">#戰機強化</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">HTML5 Canvas</span>
-                    <span class="tech-badge">Touch Events</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-detail" onclick="openModal(1)">詳細資訊</button>
-                <a href="https://leebron.itch.io/neon-frontline" target="_blank" class="btn">立即遊玩</a>
-                <a href="apks/Neon%20Frontline.apk" download class="btn btn-apk">下載 APK 檔案</a>
-            </div>
-        </div>
-
-        <!-- Game 3 -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-itch">itch.io</span>
-                    <h2 class="card-title">Bright Arena 3D</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#第一人稱</span>
-                    <span class="feature-tag">#3D射擊</span>
-                    <span class="feature-tag">#即時對戰</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">Three.js</span>
-                    <span class="tech-badge">PointerLock API</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-detail" onclick="openModal(2)">詳細資訊</button>
-                <a href="https://s11331136.github.io/3D-FPS/" target="_blank" class="btn">立即遊玩</a>
-                <a href="apks/3D%20FPS.apk" download class="btn btn-apk">下載 APK 檔案</a>
-            </div>
-        </div>
-
-        <!-- Game 4 -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-github">GitHub Pages</span>
-                    <h2 class="card-title">Neon Gravity Slingshot</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#太空物理</span>
-                    <span class="feature-tag">#引力彈射</span>
-                    <span class="feature-tag">#益智解謎</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">Vector Math</span>
-                    <span class="tech-badge">Canvas 2D</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-detail" onclick="openModal(3)">詳細資訊</button>
-                <a href="https://s11331136.github.io/Neon-Gravity-Slingshot/" target="_blank" class="btn">立即遊玩</a>
-                <a href="apks/Neon%20Gravity%20Slingshot.apk" download class="btn btn-apk">下載 APK 檔案</a>
-            </div>
-        </div>
-
-        <!-- Game 5 -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-github">GitHub Pages</span>
-                    <h2 class="card-title">Cyber Card Spire</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#卡牌構建</span>
-                    <span class="feature-tag">#回合策略</span>
-                    <span class="feature-tag">#爬塔挑戰</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">DOM Manipulation</span>
-                    <span class="tech-badge">ES6 Class</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-detail" onclick="openModal(4)">詳細資訊</button>
-                <a href="https://s11331136.github.io/Cyber-Card-Spire/" target="_blank" class="btn">立即遊玩</a>
-                <a href="apks/Cyber%20Card%20Spire.apk" download class="btn btn-apk">下載 APK 檔案</a>
-            </div>
-        </div>
-
-        <!-- Game 6 -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-github">GitHub Pages</span>
-                    <h2 class="card-title">Incremental Game</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#星際採礦</span>
-                    <span class="feature-tag">#數值膨脹</span>
-                    <span class="feature-tag">#放置掛機</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">LocalStorage</span>
-                    <span class="tech-badge">BigNumber Algo</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-detail" onclick="openModal(5)">詳細資訊</button>
-                <a href="https://s11331136.github.io/Incremental-Game/" target="_blank" class="btn">立即遊玩</a>
-                <a href="apks/Incremental%20Game.apk" download class="btn btn-apk">下載 APK 檔案</a>
-            </div>
-        </div>
-
-        <!-- Game 7 -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-github">GitHub Pages</span>
-                    <h2 class="card-title">Flight Simulator</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#3D飛行</span>
-                    <span class="feature-tag">#擬真駕駛</span>
-                    <span class="feature-tag">#自由探索</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">Three.js</span>
-                    <span class="tech-badge">WebGL Engine</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-detail" onclick="openModal(6)">詳細資訊</button>
-                <a href="https://s11331136.github.io/Flight-Simulator-Pro-Max/" target="_blank" class="btn">立即遊玩</a>
-            </div>
-        </div>
-
-        <!-- Game 8 (新增：速讀單字系統) -->
-        <div class="card">
-            <div>
-                <div class="card-header">
-                    <span class="badge badge-github">GitHub Pages</span>
-                    <h2 class="card-title">速讀單字系統</h2>
-                </div>
-                <div class="tag-group">
-                    <span class="feature-tag">#學習</span>
-                    <span class="feature-tag">#英文單字</span>
-                    <span class="feature-tag">#7000單字</span>
-                </div>
-                <div class="tech-stack">
-                    <span class="tech-badge">HTML5</span>
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">LocalStorage</span>
-                </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-detail" onclick="openModal(7)">詳細資訊</button>
-                <a href="https://neonstudio1009.github.io/7000/" target="_blank" class="btn">立即開啟</a>
-                <a href="apks/7000.apk" download class="btn btn-apk">下載 APK 檔案</a>
-            </div>
-        </div>
+    <!-- 4. 卡片動態展示區 -->
+    <main class="container" id="projects-container">
+        <!-- 由 JavaScript 動態渲染卡片 -->
     </main>
 
-    <!-- 4. 詳情彈窗 Overlay & Content -->
+    <!-- 5. 詳情彈窗 Overlay & Content -->
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" id="modal-close-btn">&times;</button>
@@ -717,96 +551,293 @@
             </div>
             <div id="modal-tags" class="tag-group"></div>
             <p id="modal-desc" class="modal-description"></p>
-            <div class="btn-group" id="modal-actions">
-                <!-- 動態注入按鈕 -->
-            </div>
+            <div class="btn-group" id="modal-actions"></div>
         </div>
     </div>
 
     <footer>
-        <p>© 2026 Web Game Portfolio | Neon System</p>
+        <p>© 2026 Web Portfolio | Neon Studio System</p>
     </footer>
 
     <script>
-        // 專案完整資料集
+        // 專案資料集 (所有遊戲均預留 APK 下載按鈕與路徑)
         const projects = [
+            // --- 網頁遊戲類 (Games) ---
             {
+                id: 0,
+                category: "game",
                 title: "Neon Survivor",
                 badgeClass: "badge-itch",
                 badgeText: "itch.io",
                 tags: ["#肉鴿割草", "#彈幕避開", "#無盡生存"],
+                techs: ["HTML5 Canvas", "Vanilla JS"],
                 desc: "霓虹風格的 Roguelike 生存割草遊戲，避開密集的敵方彈幕，組合多樣技能達成無盡生存挑戰。",
                 playUrl: "https://leebron.itch.io/neon-survivor",
-                apkUrl: null
+                apkUrl: "apks/Neon%20Survivor.apk", // 已預留 APK 路徑
+                actionText: "立即遊玩"
             },
             {
+                id: 1,
+                category: "game",
                 title: "Neon Frontline",
                 badgeClass: "badge-itch",
                 badgeText: "itch.io",
                 tags: ["#直螢幕", "#縱向彈幕", "#戰機強化"],
+                techs: ["HTML5 Canvas", "Touch Events"],
                 desc: "縱向彈幕射擊遊戲，支援觸控操作與戰機升級系統，適合行動裝置與電腦隨時體驗。",
                 playUrl: "https://leebron.itch.io/neon-frontline",
-                apkUrl: "apks/Neon%20Frontline.apk"
+                apkUrl: "apks/Neon%20Frontline.apk",
+                actionText: "立即遊玩"
             },
             {
+                id: 2,
+                category: "game",
                 title: "Bright Arena 3D",
                 badgeClass: "badge-itch",
                 badgeText: "itch.io",
                 tags: ["#第一人稱", "#3D射擊", "#即時對戰"],
+                techs: ["Three.js", "PointerLock API"],
                 desc: "基於 Three.js 打造的 3D 第一人稱競技場射擊遊戲，體驗流暢的視角控制與射擊打擊感。",
                 playUrl: "https://s11331136.github.io/3D-FPS/",
-                apkUrl: "apks/3D%20FPS.apk"
+                apkUrl: "apks/3D%20FPS.apk",
+                actionText: "立即遊玩"
             },
             {
+                id: 3,
+                category: "game",
                 title: "Neon Gravity Slingshot",
                 badgeClass: "badge-github",
                 badgeText: "GitHub Pages",
                 tags: ["#太空物理", "#引力彈射", "#益智解謎"],
+                techs: ["Vector Math", "Canvas 2D"],
                 desc: "利用星體重力場彈射飛船的物理解謎遊戲，精確計算軌跡穿越各種太空障礙。",
                 playUrl: "https://s11331136.github.io/Neon-Gravity-Slingshot/",
-                apkUrl: "apks/Neon%20Gravity%20Slingshot.apk"
+                apkUrl: "apks/Neon%20Gravity%20Slingshot.apk",
+                actionText: "立即遊玩"
             },
             {
+                id: 4,
+                category: "game",
                 title: "Cyber Card Spire",
                 badgeClass: "badge-github",
                 badgeText: "GitHub Pages",
                 tags: ["#卡牌構建", "#回合策略", "#爬塔挑戰"],
+                techs: ["DOM Manipulation", "ES6 Class"],
                 desc: "賽博朋克風格的 Deck-building 爬塔策略遊戲，自由組合卡牌戰術挑戰層層關卡。",
                 playUrl: "https://s11331136.github.io/Cyber-Card-Spire/",
-                apkUrl: "apks/Cyber%20Card%20Spire.apk"
+                apkUrl: "apks/Cyber%20Card%20Spire.apk",
+                actionText: "立即遊玩"
             },
             {
+                id: 5,
+                category: "game",
                 title: "Incremental Game",
                 badgeClass: "badge-github",
                 badgeText: "GitHub Pages",
                 tags: ["#星際採礦", "#數值膨脹", "#放置掛機"],
+                techs: ["LocalStorage", "BigNumber Algo"],
                 desc: "星際資源採集主題的放置增量遊戲，體驗自動化升級與指數級成長的數值快感。",
                 playUrl: "https://s11331136.github.io/Incremental-Game/",
-                apkUrl: "apks/Incremental%20Game.apk"
+                apkUrl: "apks/Incremental%20Game.apk",
+                actionText: "立即遊玩"
             },
             {
+                id: 6,
+                category: "game",
                 title: "Flight Simulator",
                 badgeClass: "badge-github",
                 badgeText: "GitHub Pages",
                 tags: ["#3D飛行", "#擬真駕駛", "#自由探索"],
+                techs: ["Three.js", "WebGL Engine"],
                 desc: "網頁端 WebGL 3D 飛行模擬器，提供寫實的操作體驗與廣闊天空自由飛行樂趣。",
                 playUrl: "https://s11331136.github.io/Flight-Simulator-Pro-Max/",
-                apkUrl: null
+                apkUrl: "apks/Flight%20Simulator.apk", // 已預留 APK 路徑
+                actionText: "立即遊玩"
             },
             {
+                id: 7,
+                category: "game",
+                title: "Echo Hunt",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#迴音探索", "#聲波解謎", "#互動冒險"],
+                techs: ["Web Audio API", "Canvas 2D"],
+                desc: "透過聲波定位與迴音探索未知的暗黑空間，體驗獨特的視覺與聽覺解謎冒險。",
+                playUrl: "https://neonstudio1009.github.io/Echo-Hunt/",
+                apkUrl: "apks/Echo%20Hunt.apk", // 已預留 APK 路徑
+                actionText: "立即遊玩"
+            },
+            {
+                id: 8,
+                category: "game",
+                title: "Dice-Dungeon",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#骰子點數", "#地牢探索", "#機率策略"],
+                techs: ["JS Game Loop", "CSS Grid"],
+                desc: "結合骰子點數組合與地牢闖關的策略卡牌遊戲，運用智慧與運氣征服層層怪物。",
+                playUrl: "https://neonstudio1009.github.io/DICE/",
+                apkUrl: "apks/Dice%20Dungeon.apk", // 已預留 APK 路徑
+                actionText: "立即遊玩"
+            },
+            {
+                id: 9,
+                category: "game",
+                title: "NEXUS",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#賽博科幻", "#節奏對抗", "#網頁遊戲"],
+                techs: ["Web Gaming Engine", "Audio FX"],
+                desc: "科幻風格節奏互動作品，探索未來網路世界 Nexus 中的隱藏核心與動態挑戰。",
+                playUrl: "https://neonstudio1009.github.io/NEXUS/",
+                apkUrl: "apks/NEXUS.apk", // 已預留 APK 路徑
+                actionText: "立即遊玩"
+            },
+            {
+                id: 10,
+                category: "game",
+                title: "Gold Mining",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#經典採礦", "#休閒娛樂", "#時限挑戰"],
+                techs: ["Physics Engine", "Canvas 2D"],
+                desc: "重現經典黃金礦工體驗，擺動抓鉤擷取高價值礦石與寶藏，挑戰更高的得分紀錄。",
+                playUrl: "https://neonstudio1009.github.io/gold-mining/",
+                apkUrl: "apks/Gold%20Mining.apk", // 已預留 APK 路徑
+                actionText: "立即遊玩"
+            },
+            {
+                id: 11,
+                category: "game",
+                title: "文字陀螺",
+                badgeClass: "badge-github",
+                badgeText: "GitHub Pages",
+                tags: ["#文字對戰", "#陀螺碰撞", "#趣味模擬"],
+                techs: ["DOM Animation", "Physics Simulator"],
+                desc: "以文字為核心的創意物理碰撞遊戲，客製化你的文字陀螺，在競技場中展開旋風對決。",
+                playUrl: "https://neonstudio1009.github.io/beyblade/",
+                apkUrl: "apks/Beyblade.apk", // 已預留 APK 路徑
+                actionText: "立即遊玩"
+            },
+
+            // --- 專題與系統平台類 (Projects) ---
+            {
+                id: 12,
+                category: "project",
+                title: "CityResQ 城市災害韌性平台",
+                badgeClass: "badge-project",
+                badgeText: "專題研究",
+                tags: ["#GIS空間分析", "#開放資料", "#WebGIS平台"],
+                techs: ["Leaflet.js", "OpenData API", "Chart.js"],
+                desc: "整合城市公開資料與 GIS 地理資訊系統，針對極端氣候進行災害風險分析與韌性評估的決策平台。",
+                playUrl: "https://neonstudio1009.github.io/CityResQ/",
+                apkUrl: null,
+                actionText: "瀏覽專題平台",
+                btnStyle: "btn-project"
+            },
+            {
+                id: 13,
+                category: "project",
+                title: "天空之眼系統專題網頁",
+                badgeClass: "badge-project",
+                badgeText: "專題展示",
+                tags: ["#無人機系統", "#專題發表", "#簡報展示"],
+                techs: ["HTML5 Presentation", "Interactive UI"],
+                desc: "「天空之眼」無人機監控與自動化系統展演網站，包含架構說明、技術特點與成果展示。",
+                playUrl: "https://neonstudio1009.github.io/drone-system/",
+                apkUrl: null,
+                actionText: "進入專題說明",
+                btnStyle: "btn-project"
+            },
+
+            // --- 應用與工具類 (Tools) ---
+            {
+                id: 14,
+                category: "tool",
                 title: "速讀單字系統",
                 badgeClass: "badge-github",
                 badgeText: "GitHub Pages",
                 tags: ["#學習", "#英文單字", "#7000單字"],
+                techs: ["HTML5", "JavaScript", "LocalStorage"],
                 desc: "針對高中與檢定考試設計的高效單字記憶工具，協助快速刷題與強化英文單字印象。",
                 playUrl: "https://neonstudio1009.github.io/7000/",
-                apkUrl: "apks/vocabulary.apk"
+                apkUrl: "apks/7000.apk",
+                actionText: "開啟學習系統"
             }
         ];
 
+        let currentCategory = 'all';
+
+        // 更新分類統計數量
+        function updateCounts() {
+            document.getElementById('count-all').textContent = projects.length;
+            document.getElementById('count-game').textContent = projects.filter(p => p.category === 'game').length;
+            document.getElementById('count-project').textContent = projects.filter(p => p.category === 'project').length;
+            document.getElementById('count-tool').textContent = projects.filter(p => p.category === 'tool').length;
+        }
+
+        // 渲染卡片清單
+        function renderCards(filterCategory = 'all') {
+            const container = document.getElementById('projects-container');
+            container.innerHTML = '';
+
+            const filteredProjects = filterCategory === 'all' 
+                ? projects 
+                : projects.filter(p => p.category === filterCategory);
+
+            filteredProjects.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.animationDelay = `${(index % 8) * 0.08}s`;
+
+                const btnClass = item.btnStyle ? `btn ${item.btnStyle}` : 'btn';
+                const apkBtn = item.apkUrl 
+                    ? `<a href="${item.apkUrl}" download class="btn btn-apk">下載 APK 檔案</a>` 
+                    : '';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header">
+                            <span class="badge ${item.badgeClass}">${item.badgeText}</span>
+                            <h2 class="card-title">${item.title}</h2>
+                        </div>
+                        <div class="tag-group">
+                            ${item.tags.map(t => `<span class="feature-tag">${t}</span>`).join('')}
+                        </div>
+                        <div class="tech-stack">
+                            ${item.techs.map(t => `<span class="tech-badge">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-detail" onclick="openModal(${item.id})">詳細資訊</button>
+                        <a href="${item.playUrl}" target="_blank" class="${btnClass}">${item.actionText}</a>
+                        ${apkBtn}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 切換頁籤分類
+        function switchCategory(category, btnElement) {
+            currentCategory = category;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const container = document.getElementById('projects-container');
+            container.classList.remove('active');
+            
+            renderCards(category);
+
+            // 觸發重新進場動畫
+            setTimeout(() => {
+                container.classList.add('active');
+            }, 30);
+        }
+
         // 開場動畫點擊邏輯
         const introScreen = document.getElementById('intro-screen');
-        const container = document.querySelector('.container');
+        const container = document.getElementById('projects-container');
         let clicked = false;
 
         introScreen.addEventListener('click', () => {
@@ -819,7 +850,7 @@
             }, 300);
         });
 
-        // 彈窗控制邏輯
+        // 彈窗 Modal 控制
         const modalOverlay = document.getElementById('modal-overlay');
         const modalCloseBtn = document.getElementById('modal-close-btn');
         const modalBadge = document.getElementById('modal-badge');
@@ -828,31 +859,28 @@
         const modalDesc = document.getElementById('modal-desc');
         const modalActions = document.getElementById('modal-actions');
 
-        function openModal(index) {
-            const data = projects[index];
+        function openModal(id) {
+            const data = projects.find(p => p.id === id);
             if (!data) return;
 
-            // 設置 Modal 內容
             modalBadge.className = `badge ${data.badgeClass}`;
             modalBadge.textContent = data.badgeText;
             modalTitle.textContent = data.title;
             modalDesc.textContent = data.desc;
 
-            // 渲染標籤
             modalTags.innerHTML = data.tags
                 .map(tag => `<span class="feature-tag">${tag}</span>`)
                 .join('');
 
-            // 渲染按鈕
-            let actionsHTML = `<a href="${data.playUrl}" target="_blank" class="btn">立即前往 / 遊玩</a>`;
+            const mainBtnClass = data.btnStyle ? `btn ${data.btnStyle}` : 'btn';
+            let actionsHTML = `<a href="${data.playUrl}" target="_blank" class="${mainBtnClass}">${data.actionText}</a>`;
             if (data.apkUrl) {
                 actionsHTML += `<a href="${data.apkUrl}" download class="btn btn-apk">下載 APK 檔案</a>`;
-            } else {
-                actionsHTML += `<span class="btn btn-disabled">建議電腦開啟遊玩</span>`;
+            } else if (data.category === 'game') {
+                actionsHTML += `<span class="btn btn-disabled">建議電腦或瀏覽器開啟</span>`;
             }
             modalActions.innerHTML = actionsHTML;
 
-            // 顯示 Modal
             modalOverlay.classList.add('active');
         }
 
@@ -862,18 +890,18 @@
 
         modalCloseBtn.addEventListener('click', closeModal);
 
-        // 點擊背景遮罩關閉 Modal
         modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                closeModal();
-            }
+            if (e.target === modalOverlay) closeModal();
         });
 
-        // ESC 鍵關閉 Modal
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
-                closeModal();
-            }
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
+        });
+
+        // 初始化頁面
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCounts();
+            renderCards('all');
         });
     </script>
 
